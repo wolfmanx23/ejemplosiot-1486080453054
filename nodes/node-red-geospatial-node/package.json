@@ -1,0 +1,48 @@
+{
+  "name": "node-red-node-pushover",
+  "version": "0.0.1",
+  "description": "A Node-RED node to send alerts via Pushover",
+  "dependencies": {
+    "pushover-notifications": "0.2.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/node-red/node-red-nodes/tree/master/social/pushover"
+  },
+  "license": "Apache",
+  "keywords": [
+    "node-red",
+    "pushover"
+  ],
+  "node-red": {
+    "nodes": {
+      "pushover": "57-pushover.js"
+    }
+  },
+  "author": {
+    "name": "Dave Conway-Jones",
+    "email": "ceejay@vnet.ibm.com",
+    "url": "http://nodered.org"
+  },
+  "_id": "node-red-node-pushover@0.0.1",
+  "dist": {
+    "shasum": "3fc8d31a4ee9c0f78657b9d7a5b4c23e8ae0e0fe",
+    "tarball": "http://registry.npmjs.org/node-red-node-pushover/-/node-red-node-pushover-0.0.1.tgz"
+  },
+  "_from": "node-red-node-pushover@",
+  "_npmVersion": "1.4.3",
+  "_npmUser": {
+    "name": "dceejay",
+    "email": "ceejay@vnet.ibm.com"
+  },
+  "maintainers": [
+    {
+      "name": "dceejay",
+      "email": "ceejay@vnet.ibm.com"
+    }
+  ],
+  "directories": {},
+  "_shasum": "3fc8d31a4ee9c0f78657b9d7a5b4c23e8ae0e0fe",
+  "_resolved": "https://registry.npmjs.org/node-red-node-pushover/-/node-red-node-pushover-0.0.1.tgz",
+  "readme": "ERROR: No README data found!"
+}

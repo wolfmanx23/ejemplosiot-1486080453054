@@ -1,0 +1,157 @@
+<!--
+  Copyright 2014 IBM Corp. and Chris Howard @kitard
+  
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<script type="text/x-red" data-template-name="geospatial">
+    <div class="form-row">
+        <label for="node-input-broker"><i class="fa fa-globe"></i> Broker</label>
+        <input type="text" id="node-input-broker">
+    </div>
+    <div class="form-row">
+        <label for="node-input-input-topic"><i class="fa fa-sign-in"></i> Input Topic</label>
+        <input type="text" id="node-input-inputtopic" placeholder="Input Topic">
+    </div>
+	<div class="form-row">
+        <label for="node-input-notify-topic"><i class="fa fa-sign-out"></i> Notify Topic</label>
+        <input type="text" id="node-input-notifytopic" placeholder="Notify Topic">
+    </div>
+    <div class="form-row">
+        <label for="node-input-qos"><i class="fa fa-empire"></i> QoS</label>
+        <select id="node-input-qos" style="width:125px !important">
+            <option value=""></option>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+        </select>
+        &nbsp;&nbsp;<i class="fa fa-history"></i>&nbsp;Retain &nbsp;<select id="node-input-retain" style="width:125px !important">
+            <option value=""></option>
+            <option value="false">false</option>
+            <option value="true">true</option>
+        </select>
+    </div>
+    
+	<div class="form-tips">
+		<b> Tip:</b> Leave QoS or retain blank if you want to set them via msg properties.
+	</div>
+	
+	<div class="form-row" style="padding: 10px 0 0 0;">
+        <label for="node-input-service"><i class="icon-folder-close"></i> Service</label>
+        <select type="text" id="node-input-service" style="display: inline-block; width: 70%;">
+        </select>
+    </div>
+	
+	<div class="form-row" id="node-deviceid">
+        <label for="node-input-device-id"><i class="fa fa-map-marker"></i> Device Id</label>
+        <input type="text" id="node-input-deviceid" placeholder="payload.id">
+    </div>
+	
+	<div class="form-row" id="node-latitude" >
+        <label for="node-input-latitude"><i class="fa fa-arrows-v"></i> Latitude</label>
+        <input type="text" id="node-input-latitude" placeholder="payload.lat">
+    </div>
+	
+	<div class="form-row" id="node-longitude">
+        <label for="node-input-longitude"><i class="fa fa-arrows-h"></i> Longitude</label>
+        <input type="text" id="node-input-longitude" placeholder="payload.lon">
+    </div>
+	
+	<div class="form-row" id="node-refresh">
+        <label>&nbsp;</label>
+        <input type="checkbox" id="node-input-refresh" style="display: inline-block; width: auto; vertical-align: top;">
+        <label for="node-input-refresh" style="width: 70%;">Update service status every 60 second?</label>
+    </div>
+	
+	<div class="form-tips" id="node-missing-service-warning" style="display: none">
+		<i class="fa fa-warning"></i><b> Warning:</b> There are no Geospatial Analytics services bound.
+	</div>
+	
+	<div class="form-tips" id="node-geospatial-tip" >
+		<b> Info:</b> Id, Lat & Long specify the names of the input JSON attributes.
+	</div>
+		
+	<div class="form-row" style="padding: 10px 0 10px 0;">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Geospatial Analytics">
+    </div>
+	
+	<div class="form-row">
+        <label>&nbsp;</label>
+		<img src="data:image/png;base64,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" align="right" />
+    </div>
+	
+</script>
+
+<script type="text/x-red" data-help-name="geospatial">
+    <p>The Geospatial Analytics service allows you to monitor device locations in real-time as well as controlling regions / geofences being monitored.</p>
+    <p>MQTT is used for data transport, with payload fields used to define the device id, latitude and longitude in the incoming message.</p>
+    <p>The output provides events that are generated by the Geospatial Analytics service when devices enter or exit a region.</p>
+	<p>Additional status message topics include the service being started, stopped, restarted as well as regions being added or removed.</p>
+	<p>Message topics include <i>device</i> (with id, lat, lon in the payload), <i>start</i>, <i>stop</i>, <i>restart</i>, <i>add</i> (region definition in the payload), <i>remove</i> (region type and name in the payload) and <i>status</i>.</p>
+	<p>Please note <i>start</i> and <i>restart</i> requests may take up to 30 seconds to complete.</p>
+	<p>See further <a href="https://www.ng.bluemix.net/docs/#services/geospatial/index.html" target="_blank">documentation</a> here.</p>
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('geospatial',{
+        category: 'function',
+        defaults: {
+            broker: {type:"mqtt-broker", required:true},
+            inputtopic: {value:"", required:true},
+			notifytopic: {value:"", required:true},
+            qos: {value:""},
+            retain: {value:""},
+			service: {value:"", required:true},
+			deviceid: {value:"", required:true},
+			latitude: {value:"", required:true},
+			longitude: {value:"", required:true},
+			refresh: {value:false},
+			name: {value:""}
+        },
+        color:"#c0deed",
+        inputs:1,
+        outputs:1,
+        icon: "white-globe.png",
+        label: function() {
+            return this.name||this.topic||"geospatial";
+        },
+        labelStyle: function() {
+            return this.name?"node_label_italic":"";
+        },
+		oneditprepare: function() {
+				$.getJSON('geospatial/vcap/', function(services) {
+					if (services.length === 0) {
+                        $("#node-missing-service-warning").show();
+						$("#node-deviceid").hide();
+						$("#node-latitude").hide();
+						$("#node-longitude").hide();
+						$("#node-refresh").hide();
+						$("#node-geospatial-tip").hide();
+                    } else {
+                        var select = $('#node-input-service');
+                        for (var i = 0; i < services.length; ++i) {
+                            var service = services[i];
+                            var option = "<option value=\"" + service.name + "\">" + service.name + "</option>";
+                            select.append(option);
+                        }
+                    }
+                });
+		}
+		
+    });
+</script>
+
+
+
+
