@@ -1,11 +1,11 @@
 applications:
 - path: .
-  memory: 1024M
+  memory: 4024M
   instances: 1
   domain: mybluemix.net
   name: ejemplosiot
   host: ejemplosiot
-  disk_quota: 1024M
+  disk_quota: 2048M
   services:
   - ejemplosiot-cloudantNoSQLDB
   - ejemplosiot-iotf-service
